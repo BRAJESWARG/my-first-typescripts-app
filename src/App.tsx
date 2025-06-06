@@ -1,11 +1,16 @@
-import React from 'react';
-import logo from './logo.svg';
+// import React from 'react';
+// import logo from './logo.svg';
 import './App.css';
+import BlueButton from './components/BlueButton';
+import GreenButton from './components/GreenButton';
+import PurpleButton from './components/PurpleButton';
+import RedButton from './components/RedButton';
+import YellowButton from './components/YellowButton';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
@@ -18,7 +23,16 @@ function App() {
         >
           Learn React
         </a>
-      </header>
+      </header> */}
+
+      <div style={{ textAlign: 'center', marginTop: '50px' }}>
+        <RedButton />
+        <BlueButton />
+        <GreenButton />
+        <PurpleButton />
+        <YellowButton />
+      </div>
+
     </div>
   );
 }
