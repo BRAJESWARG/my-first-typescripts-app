@@ -1,26 +1,25 @@
-import React from "react";
+import BlueButton from "./Button/BlueButton";
+import GreenButton from "./Button/GreenButton";
+import PurpleButton from "./Button/PurpleButton";
+import RedButton from "./Button/RedButton";
+import YellowButton from "./Button/YellowButton";
 
-type ColorButtonProps = {
-    label: string;
-    color: string;
-}
 
-const ColorButton: React.FC<ColorButtonProps> = ({ label, color }) => {
+
+function ColorButton() {
     return (
-        <button
-            style={{
-                backgroundColor: color,
-                color: 'white',
-                padding: '10px 20px',
-                border: 'none',
-                borderRadius: '8px',
-                margin: '10px',
-                cursor: 'pointer',
-            }}
-        >
-            {label}
-        </button>
-    )
+        <div className="ColorButton">
+
+            <div style={{ textAlign: 'center', marginTop: '50px' }}>
+                <RedButton />
+                <BlueButton />
+                <GreenButton />
+                <PurpleButton />
+                <YellowButton />
+            </div>
+
+        </div>
+    );
 }
 
 export default ColorButton;
