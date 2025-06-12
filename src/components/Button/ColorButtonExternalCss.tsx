@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles/ColorButton.css';
+import '../styles/ColorButton.css';
 
 type ColorButtonProps = {
   label: string;
