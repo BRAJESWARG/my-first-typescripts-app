@@ -1,15 +1,17 @@
 import DataTable from './DataTable';
 
+const headers = ['City', 'Population', 'Language'];
+
 const TableFive = () => {
     const data = [
-        { City: 'Mumbai', Population: 20000000, Language: 'Marathi' },
-        { City: 'Delhi', Population: 18000000, Language: 'Hindi' },
+        { id: 1, City: 'Mumbai', Population: 20000000, Language: 'Marathi' },
+        { id: 2, City: 'Delhi', Population: 18000000, Language: 'Hindi' },
     ];
 
     return (
         <>
             <h1 style={{ textAlign: 'center' }}>Tables Five Example</h1>
-            <DataTable data={data} />
+            <DataTable data={data} headers={headers} />
         </>
     );
 };

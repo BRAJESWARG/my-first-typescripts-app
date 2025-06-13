@@ -1,21 +1,23 @@
+import React from 'react';
 import DataTable from './DataTable';
 
-const TableOne = () => {
-    const data = [
-        { Name: 'Alice', Age: 25, Country: 'USA' },
-        { Name: 'Bob', Age: 30, Country: 'Canada' },
-        { Name: 'Charlie', Age: 28, Country: 'UK' },
-        { Name: 'David', Age: 22, Country: 'India' },
-        { Name: 'Eve', Age: 35, Country: 'Germany' },
-        { Name: 'Frank', Age: 27, Country: 'France' },
-        { Name: 'Grace', Age: 24, Country: 'Spain' },
-    ];
+const headers = ['Name', 'Age', 'Country'];
 
+const sampleData = [
+    { id: 1, Name: 'Alice', Age: 25, Country: 'USA' },
+    { id: 2, Name: 'Bob', Age: 30, Country: 'UK' },
+    { id: 3, Name: 'Charlie', Age: 28, Country: 'Canada' },
+    { id: 4, Name: 'David', Age: 32, Country: 'Germany' },
+    { id: 5, Name: 'Eva', Age: 27, Country: 'France' },
+    { id: 6, Name: 'Frank', Age: 29, Country: 'Italy' },
+];
+
+const TableOne: React.FC = () => {
     return (
-        <>
+        <div>
             <h1 style={{ textAlign: 'center' }}>Tables One Example</h1>
-            <DataTable data={data} />
-        </>
+            <DataTable data={sampleData} headers={headers} />
+        </div>
     );
 };
 
