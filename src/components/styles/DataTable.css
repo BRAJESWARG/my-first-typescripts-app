@@ -9,10 +9,12 @@ table {
   margin-bottom: 10px;
 }
 
-th, td {
+th,
+td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
+  width: 10rem;
 }
 
 th {
@@ -20,7 +22,8 @@ th {
   cursor: pointer;
 }
 
-.edit-button, .save-button {
+.edit-button,
+.save-button {
   background-color: #0077cc;
   border: none;
   color: white;
@@ -30,12 +33,13 @@ th {
   cursor: pointer;
 }
 
-.edit-button:hover, .save-button:hover {
+.edit-button:hover,
+.save-button:hover {
   background-color: #005fa3;
 }
 
 input[type="text"] {
-  width: 100%;
+  width: 50%;
   padding: 5px;
 }
 
