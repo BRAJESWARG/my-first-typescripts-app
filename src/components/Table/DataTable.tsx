@@ -1,114 +1,86 @@
-import React, { useState, useMemo } from 'react';
+import React from 'react';
 import '../styles/DataTable.css';
+import SortHeader from '../SortHeader/SortHeader';
 
-type TableRow = {
+type Row = {
     id: number;
     [key: string]: string | number;
 };
 
+type SortConfig = {
+    key: string;
+    direction: 'asc' | 'desc';
+} | null;
+
+
 type Props = {
-    data: TableRow[];
+    data: Row[];
     headers: string[];
+    editingId: number | null;
+    onEditClick: (id: number) => void;
+    onChange: (id: number, key: string, value: string) => void;
+    onSaveClick: (id: number) => void;
+    onSort: (key: string) => void;
+    sortConfig: { key: string; direction: 'asc' | 'desc' } | null;
 };
 
-const DataTable: React.FC<Props> = ({ data, headers }) => {
-    const [tableData, setTableData] = useState<TableRow[]>(data);
-    const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'asc' | 'desc' } | null>(null);
-    const [currentPage, setCurrentPage] = useState(1);
-    const rowsPerPage = 3;
-    const [editingRowId, setEditingRowId] = useState<number | null>(null);
-
-    const sortedData = useMemo(() => {
-        if (!sortConfig) return [...tableData];
-        return [...tableData].sort((a, b) => {
-            const aVal = a[sortConfig.key];
-            const bVal = b[sortConfig.key];
-            const sortOrder = sortConfig.direction === 'asc' ? 1 : -1;
-            return aVal > bVal ? sortOrder : aVal < bVal ? -sortOrder : 0;
-        });
-    }, [tableData, sortConfig]);
-
-    const paginatedData = sortedData.slice(
-        (currentPage - 1) * rowsPerPage,
-        currentPage * rowsPerPage
-    );
-
-    const totalPages = Math.ceil(tableData.length / rowsPerPage);
-
-    const handleSort = (key: string) => {
-        let direction: 'asc' | 'desc' = 'asc';
-        if (sortConfig?.key === key && sortConfig.direction === 'asc') {
-            direction = 'desc';
-        }
-        setSortConfig({ key, direction });
-    };
-
-    const handleInputChange = (rowId: number, key: string, value: string) => {
-        const updated = tableData.map((row) =>
-            row.id === rowId ? { ...row, [key]: value } : row
-        );
-        setTableData(updated);
-    };
-
+const DataTable: React.FC<Props> = ({
+    data,
+    headers,
+    editingId,
+    onEditClick,
+    onChange,
+    onSaveClick,
+    onSort,
+    sortConfig,
+}) => {
     return (
-        <div className="table-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        {headers.map((header) => (
-                            <th key={header} onClick={() => handleSort(header)}>
-                                {header.toUpperCase()}
-                                {sortConfig?.key === header ? (
-                                    sortConfig.direction === 'asc' ? ' 🔼' : ' 🔽'
-                                ) : ' 🔼'}
-                            </th>
-                        ))}
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {paginatedData.map((row) => {
-                        const isEditing = editingRowId === row.id;
-                        return (
-                            <tr key={row.id}>
-                                {headers.map((header) => (
-                                    <td key={header}>
-                                        {isEditing ? (
-                                            <input
-                                                type="text"
-                                                value={row[header]}
-                                                onChange={(e) =>
-                                                    handleInputChange(row.id, header, e.target.value)
-                                                }
-                                            />
-                                        ) : (
-                                            row[header]
-                                        )}
-                                    </td>
-                                ))}
-                                <td>
+        <table>
+            <thead>
+                <tr>
+                    {headers.map((header) => (
+                        <SortHeader
+                            key={header}
+                            header={header}
+                            sortConfig={sortConfig}
+                            onSort={onSort}        // ✅ This must exist and be defined!
+                        />
+                    ))}
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {data.map((row) => {
+                    const isEditing = row.id === editingId;
+                    return (
+                        <tr key={row.id}>
+                            {headers.map((header) => (
+                                <td key={header}>
                                     {isEditing ? (
-                                        <button className="save-button" onClick={() => setEditingRowId(null)}>💾 Save</button>
+                                        <input
+                                            type="text"
+                                            value={row[header as keyof typeof row]}
+                                            onChange={(e) =>
+                                                onChange(row.id, header, e.target.value)
+                                            }
+                                        />
                                     ) : (
-                                        <button className="edit-button" onClick={() => setEditingRowId(row.id)}>✏️ Edit</button>
+                                        row[header as keyof typeof row]
                                     )}
                                 </td>
-                            </tr>
-                        );
-                    })}
-                </tbody>
-            </table>
-
-            <div className="pagination">
-                <button onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))} disabled={currentPage === 1}>
-                    Prev
-                </button>
-                <span>Page {currentPage} of {totalPages}</span>
-                <button onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages}>
-                    Next
-                </button>
-            </div>
-        </div>
+                            ))}
+                            <td>
+                                {isEditing ? (
+                                    <button onClick={() => onSaveClick(row.id)}>💾 Save</button>
+                                ) : (
+                                    <button onClick={() => onEditClick(row.id)}>✏️ Edit</button>
+                                )}
+                            </td>
+                        </tr>
+                    );
+                })}
+            </tbody>
+        </table>
     );
 };
 

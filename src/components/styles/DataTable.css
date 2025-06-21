@@ -48,3 +48,25 @@ input[type="text"] {
   gap: 10px;
   align-items: center;
 }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+th {
+  background-color: #f4f4f4;
+  cursor: pointer;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 4px;
+}
