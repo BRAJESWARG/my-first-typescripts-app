@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import '../styles/DataTable.css';
-import Pagination from '../Pagination/Pagination'; // <-- import component
+import Pagination from '../Pagination/Pagination';
 
 type TableRow = {
     id: number;
